@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form method="">
+
+    </form>
+    <button onclick="getData()">get data</button>
+    <button onclick="addStudent()">add Student</button>
+    Student:<input id="selectedStudent" value="-1">
+    <hr>
+    student name:<input id="sName"><br>
+    student age:<input id="sAge">
+    <div id="root"></div>
+    <script>
+        let res
+        const MY_SERVER ='http://127.0.0.1:5000/students/'
+        const getData = async () => {
+            let URL = `${MY_SERVER}${selectedStudent.value > -1 ? selectedStudent.value : ''}`
+            console.log(URL)
+            res = await fetch(URL).then(response => response.json())
+            root.innerHTML = JSON.stringify(res)
+        }
+
+
+        const addStudent = () => {
+            fetch(`${MY_SERVER}`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: sName.value,
+                    age: sAge.value,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
+        }
+
+    </script>
+</body>
+
+</html>
