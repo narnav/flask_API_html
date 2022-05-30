@@ -21,12 +21,12 @@
     <div id="root"></div>
     <script>
         let res
-        const MY_SERVER ='http://127.0.0.1:5000/students/'
+        const MY_SERVER = 'http://127.0.0.1:5000/students/'
         const getData = async () => {
             let URL = `${MY_SERVER}${selectedStudent.value > -1 ? selectedStudent.value : ''}`
             console.log(URL)
             res = await fetch(URL).then(response => response.json())
-            root.innerHTML = JSON.stringify(res)
+            root.innerHTML =res.map((student,ind) => `<h1>${student.name}  ${student.age}<button onClick='delStudent(${ind})'>DEL</button></h1>`).join('')
         }
 
 
@@ -44,7 +44,14 @@
                 .then((response) => response.json())
                 .then((json) => console.log(json));
         }
-
+        const delStudent =async (id) => {
+            let URL = `${MY_SERVER}${id}`
+            console.log(URL)
+            await fetch(URL, {
+                method: 'DELETE',
+            });
+            getData()
+        }
     </script>
 </body>
 

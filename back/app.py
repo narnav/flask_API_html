@@ -20,9 +20,12 @@ studentsAr = [{'name': 'maya', "age": 17},
 # get all
 # get one (id)
 # post 
-@app.route("/students/",defaults={"id":-1},methods=['GET','POST'])
-@app.route("/students/<int:id>",methods=['GET','POST'])
+@app.route("/students/",defaults={"id":-1},methods=['GET','POST','DELETE'])
+@app.route("/students/<int:id>",methods=['GET','POST','DELETE'])
 def students(id):
+    if request.method == 'DELETE':
+        print('DELETE',id)
+        studentsAr.remove(studentsAr[id])
     if request.method == 'POST':
         request_data = request.get_json()
         sName= request_data['name']
